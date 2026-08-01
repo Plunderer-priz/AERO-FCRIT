@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  ::selection {
+    background: #E2572B;
+    color: #0C1A17;
+  }
+}
+
+@layer components {
+  /* Blueprint grid background used on hero / page-hero banners */
+  .blueprint-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(241,236,221,0.12) 0 1px, transparent 1px 88px),
+      repeating-linear-gradient(90deg, rgba(241,236,221,0.12) 0 1px, transparent 1px 88px);
+    -webkit-mask-image: radial-gradient(ellipse at 60% 40%, black 10%, transparent 72%);
+    mask-image: radial-gradient(ellipse at 60% 40%, black 10%, transparent 72%);
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  /* Finer grid used behind the exploded-diagram stages */
+  .blueprint-grid-fine {
+    background-image:
+      repeating-linear-gradient(0deg, rgba(241,236,221,0.12) 0 1px, transparent 1px 64px),
+      repeating-linear-gradient(90deg, rgba(241,236,221,0.12) 0 1px, transparent 1px 64px);
+  }
+
+  /* Exploded-diagram parts */
+  .part {
+    transform-box: fill-box;
+    transform-origin: center;
+    will-change: transform;
+  }
+  .part path, .part rect, .part circle, .part ellipse, .part line {
+    stroke: #F1ECDD;
+    fill: rgba(241, 236, 221, 0.05);
+    stroke-width: 2;
+    vector-effect: non-scaling-stroke;
+  }
+  .part.accent path, .part.accent rect, .part.accent circle, .part.accent ellipse {
+    stroke: #7FC8BE;
+  }
+
+  .part-label {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #F1ECDD;
+    white-space: nowrap;
+    background: rgba(12, 26, 23, 0.72);
+    border: 1px solid rgba(241, 236, 221, 0.22);
+    padding: 5px 9px;
+    border-radius: 3px;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  /* News ticker marquee */
+  .ticker-track {
+    animation: ticker-scroll 24s linear infinite;
+  }
+  .ticker-track:hover {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes fillbar {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+/* Smaller screens: keep exploded-diagram labels legible without crowding */
+@media (max-width: 480px) {
+  .part-label {
+    font-size: 0.56rem;
+    padding: 4px 6px;
+    letter-spacing: 0.04em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none !important;
+  }
+}
